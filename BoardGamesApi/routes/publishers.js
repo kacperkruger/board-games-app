@@ -53,3 +53,16 @@ router.put('/:id', async (req, res) => {
         res.status(400).send(err.message);
     }
 })
+
+router.delete('/:id', async(req, res) => {
+    const id = req.params.id;
+    try {
+        await Game.deleteMany({publisher: id})
+        await Publisher.deleteOne({_id: id});
+        res.sendStatus(200);
+    } catch (err) {
+        res.status(400).send(err.message);
+    }
+})
+
+module.exports = router;
