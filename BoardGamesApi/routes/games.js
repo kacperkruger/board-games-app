@@ -36,3 +36,30 @@ router.post('/', async (req, res) => {
     }
 
 });
+
+router.put('/:id', async (req, res) => {
+    const gameToUpdate = req.body;
+    const id = req.params.id;
+
+    try {
+        const game = await Game.findOneAndUpdate({_id: id},{
+            'name': gameToUpdate.name,
+            'year_published': gameToUpdate.year_published,
+            'min_players': gameToUpdate.min_players,
+            'max_players': gameToUpdate.max_players,
+            'min_age': gameToUpdate.min_age,
+            'min_time': gameToUpdate.min_time,
+            'max_time': gameToUpdate.max_time,
+            'short_description': gameToUpdate.short_description,
+            'description': gameToUpdate.description,
+            'image_url': gameToUpdate.image_url,
+            'price': gameToUpdate.price,
+            'publisher': gameToUpdate.publisher,
+            'category': gameToUpdate.category,
+        }, {new: true});
+        res.send(game);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send(err.message);
+    }
+})
