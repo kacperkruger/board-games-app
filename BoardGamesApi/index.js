@@ -1,8 +1,9 @@
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
 require('dotenv').config();
-const app = express();
 
+const app = express();
 app.use(express.json());
 app.use(cors());
 
@@ -12,3 +13,17 @@ const dbConnData = {
     database: process.env.MONGO_DATABASE || 'BoardGamesApi'
 };
 
+mongoose
+    .connect(`mongodb://${dbConnData.host}:${dbConnData.port}/${dbConnData.database}`, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+    .then(response => {
+        console.log(`Connected to MongoDB. Database name: "${response.connections[0].name}"`)
+        const apiPort = process.env.PORT || 5000
+        const apiHost = process.env.API_HOST || 'localhost';
+        app.listen(apiPort, () => {
+            console.log(`API server available from: http://${apiHost}:${apiPort}`);
+        });
+    })
+    .catch(error => console.error('Error connecting to MongoDB', error));
