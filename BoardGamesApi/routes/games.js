@@ -63,3 +63,17 @@ router.put('/:id', async (req, res) => {
         res.status(500).send(err.message);
     }
 })
+
+router.delete('/:id', async(req, res) => {
+    const id = req.params.id;
+    try {
+        const deletedGame = await Game.findOneAndDelete({_id: id});
+        const publisher = await Publisher.findOne({_id: deletedGame.publisher});
+        await Publisher.updateOne({_id: publisher._id}, {games: publisher.games.filter(game => game !== deletedGame._id)})
+        res.sendStatus(200);
+    } catch (err) {
+        res.status(400).send(err.message);
+    }
+})
+
+module.exports = router;
