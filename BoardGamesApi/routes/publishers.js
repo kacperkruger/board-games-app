@@ -30,3 +30,26 @@ router.post('/', async (req, res) => {
     }
 
 });
+
+router.put('/:id', async (req, res) => {
+    const id = req.params.id;
+    const publisherToUpdate = req.body;
+
+    try {
+        const publisher = await Publisher.findOneAndUpdate({_id: id}, {
+            'name': publisherToUpdate.name,
+            'description': publisherToUpdate.description,
+            'creation_year': publisherToUpdate.creation_year,
+            'image_url': publisherToUpdate.image_url,
+            'city': publisherToUpdate.city,
+            'street_name': publisherToUpdate.street_name,
+            'street_number': publisherToUpdate.street_number,
+            'apartament_number': publisherToUpdate.apartament_number,
+            'official_link': publisherToUpdate.official_link
+        }, {new: true});
+        res.send(publisher);
+    } catch(err) {
+        console.log(err.message);
+        res.status(400).send(err.message);
+    }
+})
