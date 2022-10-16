@@ -8,3 +8,31 @@ router.get('/', async (req, res) => {
     const games = await Game.find({})
     res.send(games);
 });
+
+router.post('/', async (req, res) => {
+    const gameToCreate = req.body;
+    try {
+        const game = await Game.create({
+            'name': gameToCreate.name,
+            'year_published': gameToCreate.year_published,
+            'min_players': gameToCreate.min_players,
+            'max_players': gameToCreate.max_players,
+            'min_age': gameToCreate.min_age,
+            'min_time': gameToCreate.min_time,
+            'max_time': gameToCreate.max_time,
+            'short_description': gameToCreate.short_description,
+            'description': gameToCreate.description,
+            'image_url': gameToCreate.image_url,
+            'price': gameToCreate.price,
+            'publisher': gameToCreate.publisher,
+            'category': gameToCreate.category,
+        });
+        const publisher = await Publisher.findOne({_id: game.publisher})
+        await Publisher.updateOne({_id: game.publisher}, {games: [...publisher.games, game._id]})
+        res.send(game);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send(err.message);
+    }
+
+});
