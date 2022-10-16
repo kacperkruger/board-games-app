@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
             'city': publisherToCreate.city,
             'street_name': publisherToCreate.street_name,
             'street_number': publisherToCreate.street_number,
-            'apartament_number': publisherToCreate.apartament_number,
+            'apartment_number': publisherToCreate.apartment_number,
             'official_link': publisherToCreate.official_link
         });
         res.send(publisher);
@@ -44,7 +44,7 @@ router.put('/:id', async (req, res) => {
             'city': publisherToUpdate.city,
             'street_name': publisherToUpdate.street_name,
             'street_number': publisherToUpdate.street_number,
-            'apartament_number': publisherToUpdate.apartament_number,
+            'apartment_number': publisherToUpdate.apartment_number,
             'official_link': publisherToUpdate.official_link
         }, {new: true});
         res.send(publisher);

@@ -33,7 +33,7 @@ const publisherSchema = new Schema({
         type: String,
         required: true
     },
-    apartament_number: {
+    apartment_number: {
         type: String,
     },
     official_link: {
