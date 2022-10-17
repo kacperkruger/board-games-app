@@ -1,0 +1,83 @@
+.App {
+  text-align: center;
+}
+
+@keyframes transitionIn {
+  from {
+    opacity: 0;
+    transform: rotateX(-10deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotateX(0);
+  }
+
+}
+
+.up {
+  transform: rotate(180deg);
+  transition: transform 400ms ;
+}
+
+.down {
+  transform: rotate(0deg);
+  transition: transform 400ms ;
+}
+
+.container {
+  animation: transitionIn 750ms;
+}
+
+.box-img {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border: 1px solid #dee2e6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img {
+  max-width: 90%;
+  max-height: 90%;
+
+}
+
+.home {
+  height: 90vh;
+}
+
+.game {
+  cursor: pointer;
+}
+
+.address-box {
+  width: 100%;
+  height: 45vh;
+}
+
+.address {
+  width: 75%;
+  height: 100%;
+}
+
+.hover-name {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hover-name:hover {
+  background-color: rgba(0, 0, 0, 0.432);
+  cursor: pointer;
+  color: #F8F9FA;
+  font-weight: bold;
+}
