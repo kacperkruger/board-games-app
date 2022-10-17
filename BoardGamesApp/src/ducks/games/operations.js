@@ -2,7 +2,7 @@ import actions from './actions';
 import publisherActions from './../publishers/actions';
 import axios from 'axios';
 
-const url = 'http://localhost:5000/games'
+const url = 'http://localhost/api/games'
 
 const getGameList = () => {
     return async dispatch => {

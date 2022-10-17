@@ -21,7 +21,7 @@ const ButtonList = ({ componentName, items, navigateUrl, sortValues, sortOperati
         if (sortValue !== '') {
             return sortItems(sortValue, sortOrder)
         }
-    },[sortValue, sortOrder])
+    },[sortValue, sortOrder, sortItems])
 
     const handleSortOrderClick = (value) => {
         if (value === 'asc') {
