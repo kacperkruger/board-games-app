@@ -3,22 +3,25 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import {applyMiddleware, combineReducers, createStore} from 'redux';
 import logger from 'redux-logger'
 import thunk from 'redux-thunk';
 import gamesReducer from './ducks/games/index';
 import publisherReducer from './ducks/publishers/index';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-
+import setupSocket from "./sockets";
+import socketPasser from "./middlewares/socketPasser";
 
 const store = createStore(
     combineReducers({
         games: gamesReducer,
         publishers: publisherReducer,
-    }), applyMiddleware(thunk, logger)
+    }), applyMiddleware(thunk, logger, socketPasser)
 );
+
+setupSocket(store.dispatch)
 
 ReactDOM.render(
     <React.StrictMode>
