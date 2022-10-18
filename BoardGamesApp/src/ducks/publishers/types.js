@@ -7,6 +7,12 @@ const DELETE_GAME = 'publishers/DELETE/GAME';
 const UPDATE = 'publishers/UPDATE';
 const DELETE = 'publishers/DELETE';
 
+const ADDED = 'publishers/ADDED';
+const ADDED_GAME = 'publishers/ADDED/GAME';
+const DELETED_GAME = 'publishers/DELETED/GAME';
+const UPDATED = 'publishers/UPDATED';
+const DELETED = 'publishers/DELETED';
+
 const types = {
     START,
     FAIL,
@@ -15,7 +21,13 @@ const types = {
     ADD_GAME,
     DELETE_GAME,
     UPDATE,
-    DELETE
+    DELETE,
+
+    ADDED,
+    ADDED_GAME,
+    DELETED_GAME,
+    UPDATED,
+    DELETED
 }
 
 export default types
