@@ -34,6 +34,14 @@ services:
       - PORT=4000
       - API_HOST=localhost
 
+  board-games-websocket-service:
+    restart: "always"
+    build:
+      dockerfile: Dockerfile
+      context: "./WebSocketServer"
+    volumes:
+      - ./WebSocketServer:/home/node/app
+
   board-games-web-service:
     restart: "always"
     build:
@@ -43,3 +51,4 @@ services:
       - ./BoardGamesApp:/opt/app
     depends_on:
       - board-games-backend-service
+      - board-games-websocket-service
