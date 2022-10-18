@@ -19,9 +19,6 @@ const dbConnData = {
     database: process.env.MONGO_DATABASE || 'BoardGamesApi'
 };
 
-console.log(dbConnData.user)
-console.log(dbConnData.password)
-
 mongoose
     .connect(`mongodb://${dbConnData.host}:${dbConnData.port}/${dbConnData.database}`, {
         useNewUrlParser: true,
