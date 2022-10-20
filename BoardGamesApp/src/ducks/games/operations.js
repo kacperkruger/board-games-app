@@ -1,17 +1,8 @@
 import actions from './actions';
 import publisherActions from './../publishers/actions';
 import axios from 'axios';
-import {useKeycloak} from "@react-keycloak/web";
 
 const url = 'http://board-games-app.k8s/api/games'
-
-const { keycloak } = useKeycloak()
-const accessToken = keycloak.token
-
-const header ={ headers: {
-        'Authorization': 'Bearer ' + accessToken
-} };
-
 
 const getGameList = () => {
     return async dispatch => {
@@ -29,7 +20,7 @@ const addGame = (game) => {
     return async dispatch => {
         dispatch(actions.gamesRequestStart());
         try {
-            const response = await axios.post(url, header, game);
+            const response = await axios.post(url, game);
             if (response.status === 500) {
                 dispatch(actions.gamesRequestFailure(response.data));
                 return 500;
@@ -59,7 +50,7 @@ const updateGame = (game) => {
     return async dispatch => {
         dispatch(actions.gamesRequestStart());
         try {
-            const response = await axios.put(url + `/${game._id}`, header, game);
+            const response = await axios.put(url + `/${game._id}`, game);
             if (response.status === 400) {
                 dispatch(actions.gamesRequestFailure(response.data));
                 return 400
@@ -77,7 +68,7 @@ const deleteGame = (game) => {
     return async dispatch => {
         dispatch(actions.gamesRequestStart())
         try {
-            const response = await axios.delete(url + `/${game._id}`, header);
+            const response = await axios.delete(url + `/${game._id}`);
             if (response.status === 400) {
                 return dispatch(actions.gamesRequestFailure(response.data));
             }
