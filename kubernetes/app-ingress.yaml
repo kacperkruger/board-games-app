@@ -1,0 +1,50 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+
+spec:
+  rules:
+    - host: auth.board-games-app.k8s
+      http:
+        paths:
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: keycloak-clusterip
+                port:
+                  number: 8080
+    - host: ws.board-games-app.k8s
+      http:
+        paths:
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: board-games-websocket-clusterip
+                port:
+                  number: 8000
+    - host: board-games-app.k8s
+      http:
+        paths:
+          - path: /api/(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: board-games-api-clusterip
+                port:
+                  number: 4000
+    - host: board-games-app.k8s
+      http:
+        paths:
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-clusterip
+                port:
+                  number: 80

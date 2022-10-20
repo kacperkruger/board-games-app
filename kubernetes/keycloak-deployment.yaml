@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak-deployment
+  labels:
+    app: keycloak
+    type: backend
+spec:
+  template:
+    metadata:
+      name: keycloak-pod
+      labels:
+        app: keycloak
+        type: backend
+    spec:
+      containers:
+        - name: keycloak-container
+          image: bitnami/keycloak:latest
+          env:
+            - name: KEYCLOAK_DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: PGHOST
+            - name: KEYCLOAK_DATABASE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: PGDATABASE
+            - name: KEYCLOAK_DATABASE_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: PGUSER
+            - name: KEYCLOAK_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: PGPASSWORD
+          ports:
+            - containerPort: 8080
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+      type: backend

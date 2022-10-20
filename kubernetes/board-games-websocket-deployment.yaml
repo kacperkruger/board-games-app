@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: board-games-websocket-deployment
+  labels:
+    app: board-games-websocket
+    type: websocket
+spec:
+  template:
+    metadata:
+      name: board-games-websocket-pod
+      labels:
+        app: board-games-websocket
+        type: websocket
+    spec:
+      containers:
+        - name: keycloak-container
+          image: kacperkruger/board_games_websocket
+  replicas: 1
+  selector:
+    matchLabels:
+      app: board-games-websocket
+      type: websocket

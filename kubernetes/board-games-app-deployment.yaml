@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: board-games-app-deployment
+  labels:
+    app: board-games-app
+    type: frontend
+
+spec:
+  template:
+    metadata:
+      name: board-games-app-pod
+      labels:
+        app: board-games-app
+        type: frontend
+    spec:
+      containers:
+        - name: board-games-app-container
+          image: kacperkruger/board_games_app
+
+  replicas: 1
+  selector:
+    matchLabels:
+      app: board-games-app
+      type: frontend
