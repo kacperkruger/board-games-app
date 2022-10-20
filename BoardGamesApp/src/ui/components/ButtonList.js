@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useKeycloak } from "@react-keycloak/web";
+
 const _ = require('lodash');
 
 const ButtonList = ({ componentName, items, navigateUrl, sortValues, sortOperation }) => {
     const navigate = useNavigate();
+    const { keycloak } = useKeycloak();
 
     const [sortValue, setSortValue] = useState('');
     const [sortOrder, setSortOrder] = useState('asc');
@@ -51,7 +54,7 @@ const ButtonList = ({ componentName, items, navigateUrl, sortValues, sortOperati
                         <path fillRule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
                     </svg>}
             </div>
-            <button className='btn btn-primary' onClick={handleAddClick}>Add {componentName}</button>
+            {keycloak.authenticated ? <button className='btn btn-primary' onClick={handleAddClick}>Add {componentName}</button> : null}
         </div>
     )
 }

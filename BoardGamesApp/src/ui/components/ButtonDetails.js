@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { useConfirm } from 'material-ui-confirm';
+import {useKeycloak} from "@react-keycloak/web";
 
 const ButtonDetails = ({ item, deleteOperation, navigateUrl }) => {
     const navigate = useNavigate();
     const confirm = useConfirm();
+    const { keycloak } = useKeycloak();
 
     const handleDeleteClick = (item) => {
         console.log(item)
@@ -18,7 +20,8 @@ const ButtonDetails = ({ item, deleteOperation, navigateUrl }) => {
         navigate(`/${navigateUrl}/${id}/edit`)
     }
 
-    return(
+    if (!keycloak.authenticated) return <></>
+    else return(
         <div className="buttons d-flex justify-content-end gap-2">
             <button className="btn btn-outline-primary d-flex align-items-center gap-1" onClick={() => handleEditClick(item._id)}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">

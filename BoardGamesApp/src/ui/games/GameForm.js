@@ -5,9 +5,11 @@ import { useEffect } from 'react';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { publisherOperations } from './../../ducks/publishers';
+import { useKeycloak } from "@react-keycloak/web";
 
 const GameForm = ({ id, game, categories, publishers, getGameList, addGame, updateGame, getPublisherList }) => {
     const navigate = useNavigate()
+    const { keycloak } = useKeycloak()
 
     useEffect(() => {
         if (game === undefined) {

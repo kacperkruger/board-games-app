@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -11,8 +11,10 @@ import publisherReducer from './ducks/publishers/index';
 import {Provider} from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import setupSocket from "./sockets";
+import { setupSocket } from "./sockets";
 import socketPasser from "./middlewares/socketPasser";
+import { ReactKeycloakProvider } from "@react-keycloak/web";
+import keycloak from "./keycloak"
 
 const store = createStore(
     combineReducers({
@@ -25,9 +27,11 @@ setupSocket(store.dispatch)
 
 ReactDOM.render(
     <React.StrictMode>
-        <Provider store={store}>
-            <App />
-        </Provider>
+        <ReactKeycloakProvider authClient={keycloak}>
+            <Provider store={store}>
+                <App />
+            </Provider>
+        </ReactKeycloakProvider>
     </React.StrictMode>,
     document.getElementById('root')
 );
