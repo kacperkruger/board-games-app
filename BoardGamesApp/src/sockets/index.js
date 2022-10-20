@@ -1,5 +1,6 @@
-const setupSocket = (dispatch) => {
-    const socket = new WebSocket('ws://localhost/ws')
+export const socket = new WebSocket('ws://ws.board-games-app.k8s')
+
+export const setupSocket = (dispatch) => {
 
     socket.onmessage = (event) => {
         const data = JSON.parse(event.data)
@@ -7,5 +8,3 @@ const setupSocket = (dispatch) => {
     }
     return socket
 }
-
-export default setupSocket

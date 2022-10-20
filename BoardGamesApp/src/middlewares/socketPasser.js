@@ -1,4 +1,4 @@
-const socket = new WebSocket('ws://localhost/ws')
+import { socket } from '../sockets/index'
 
 const socketPasser = store => next => action => {
     socket.send(JSON.stringify(action))
