@@ -1,8 +1,16 @@
 import gameActions from './../games/actions';
 import actions from './actions';
 import axios from 'axios';
+import {useKeycloak} from "@react-keycloak/web";
 
 const url = 'http://board-games-app.k8s/api/publishers/';
+
+const { keycloak } = useKeycloak()
+const accessToken = keycloak.token
+
+const header ={ headers: {
+        'Authorization': 'Bearer ' + accessToken
+} };
 
 const getPublisherList = () => {
     return async dispatch => {
@@ -32,7 +40,7 @@ const addPublisher = (publisher) => {
     return async dispatch => {
         dispatch(actions.publishersRequestStart());
         try {
-            const response = await axios.post(url, publisher);
+            const response = await axios.post(url, header, publisher);
             if (response.status === 500) {
                 dispatch(actions.publishersRequestFailure(response.data));
                 return 500;
@@ -50,7 +58,7 @@ const updatePublisher = (publisher) => {
     return async dispatch => {
         dispatch(actions.publishersRequestStart());
         try {
-            const response = await axios.put(url + `/${publisher._id}`, publisher);
+            const response = await axios.put(url + `/${publisher._id}`, header, publisher);
             if (response.status === 400) {
                 dispatch(actions.publishersRequestFailure(response.data));
                 return 400
@@ -68,7 +76,7 @@ const deletePublisher = (publisher) => {
     return async dispatch => {
         dispatch(actions.publishersRequestStart())
         try {
-            const response = await axios.delete(url + `/${publisher._id}`);
+            const response = await axios.delete(url + `/${publisher._id}`, header);
             if (response.status === 400) {
                 return dispatch(actions.publishersRequestFailure(response.data));
             }
