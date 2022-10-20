@@ -2,7 +2,7 @@ import actions from './actions';
 import publisherActions from './../publishers/actions';
 import axios from 'axios';
 
-const url = 'http://localhost/api/games'
+const url = 'http://board-games-app.k8s/api/games'
 
 const getGameList = () => {
     return async dispatch => {
