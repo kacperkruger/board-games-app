@@ -41,6 +41,16 @@ spec:
     - host: board-games-app.k8s
       http:
         paths:
+          - path: /auth/(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-server-clusterip
+                port:
+                  number: 5000
+    - host: board-games-app.k8s
+      http:
+        paths:
           - path: /(.*)
             pathType: Prefix
             backend:

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-server-deployment
+  labels:
+    app: auth-server
+    type: backend
+spec:
+  template:
+    metadata:
+      name: auth-server-pod
+      labels:
+        app: auth-server
+        type: backend
+    spec:
+      containers:
+        - name: auth-server-container
+          image: kacperkruger/auth-server:latest
+          env:
+            - name: HOST
+              value: "board-games-app.k8s"
+            - name: REALM
+              value: "board-games-app"
+            - name: CLIENT_ID
+              value: "board-games-webapp"
+            - name: CLIENT_SECRET
+              value: "eW0tvSgky4NfaXAHP6YlFI85L1AR0o9z"
+            - name: REDIRECT_URI
+              value: "http://board-games-app/auth/redirect"
+
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-server
+      type: backend
